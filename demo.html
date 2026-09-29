@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Security Awareness Demo</title>
+  <style>
+    body {
+      font: 16px Arial, sans-serif;
+      background: #f0f2f5;
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+    }
+    main {
+      background: white;
+      padding: 28px;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px #0002;
+      width: min(360px, calc(100% - 40px));
+    }
+    h1 { color: #1877f2; margin-top: 0; }
+    label { display: block; margin: 14px 0; }
+    input, button {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+    }
+    button {
+      border: 0;
+      border-radius: 6px;
+      background: #1877f2;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    #message { display: none; }
+  </style>
+</head>
+<body>
+  <main>
+    <section id="form">
+      <h1>Security Awareness Demo</h1>
+      <p>This is a training simulation. Do not enter a real password.</p>
+      <form id="demo">
+        <label>Demo user ID
+          <input autocomplete="off" required>
+        </label>
+        <label>Demo password
+          <input type="password" autocomplete="new-password" required>
+        </label>
+        <button type="submit">Continue</button>
+      </form>
+    </section>
+
+    <section id="message" aria-live="polite">
+      <h1>“You’ve been hacked” — simulation</h1>
+      <p>No information was saved or sent. Be cautious with unexpected login pages.</p>
+    </section>
+  </main>
+
+  <script>
+    document.querySelector("#demo").addEventListener("submit", event => {
+      event.preventDefault();
+      document.querySelector("#form").hidden = true;
+      document.querySelector("#message").style.display = "block";
+    });
+  </script>
+</body>
+</html>
