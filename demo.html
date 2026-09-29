@@ -3,69 +3,103 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Security Awareness Demo</title>
+  <title>Demo Login</title>
   <style>
+    * { box-sizing: border-box; }
     body {
-      font: 16px Arial, sans-serif;
-      background: #f0f2f5;
       margin: 0;
       min-height: 100vh;
       display: grid;
       place-items: center;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      color: #1c1e21;
+      background: #f0f2f5;
     }
-    main {
+    .container { width: min(380px, 100%); }
+    h1 { color: #1877f2; font-size: 48px; text-align: center; }
+    .card {
+      padding: 20px;
       background: white;
-      padding: 28px;
       border-radius: 10px;
       box-shadow: 0 2px 12px #0002;
-      width: min(360px, calc(100% - 40px));
     }
-    h1 { color: #1877f2; margin-top: 0; }
-    label { display: block; margin: 14px 0; }
-    input, button {
-      box-sizing: border-box;
+    .notice, footer { color: #606770; text-align: center; font-size: 13px; }
+    label { display: block; margin: 12px 0 6px; font-weight: bold; }
+    input {
       width: 100%;
-      padding: 12px;
-      margin-top: 6px;
+      padding: 13px;
+      border: 1px solid #dddfe2;
+      border-radius: 6px;
+      font-size: 16px;
     }
     button {
+      width: 100%;
+      margin-top: 16px;
+      padding: 13px;
       border: 0;
       border-radius: 6px;
       background: #1877f2;
       color: white;
+      font-size: 18px;
       font-weight: bold;
       cursor: pointer;
     }
-    #message { display: none; }
+    #error { color: #b42318; text-align: center; }
+    #welcome { display: none; text-align: center; }
+    footer { margin-top: 16px; }
   </style>
 </head>
 <body>
-  <main>
-    <section id="form">
-      <h1>Security Awareness Demo</h1>
-      <p>This is a training simulation. Do not enter a real password.</p>
-      <form id="demo">
-        <label>Demo user ID
-          <input autocomplete="off" required>
-        </label>
-        <label>Demo password
-          <input type="password" autocomplete="new-password" required>
-        </label>
-        <button type="submit">Continue</button>
-      </form>
+  <main class="container">
+    <h1>facebook</h1>
+
+    <form class="card" id="loginForm">
+      <p class="notice">Demo mockup — credentials are not sent or stored.</p>
+
+      <label for="username">Username</label>
+      <input id="username" autocomplete="username" required>
+
+      <label for="password">Password</label>
+      <input id="password" type="password" autocomplete="current-password" required>
+
+      <button type="submit">Log In</button>
+      <p id="error" role="alert"></p>
+    </form>
+
+    <section class="card" id="welcome">
+      <h2>Welcome!</h2>
+      <p>You’re logged in to this demo page.</p>
+      <button id="logout" type="button">Log out</button>
     </section>
 
-    <section id="message" aria-live="polite">
-      <h1>“You’ve been hacked” — simulation</h1>
-      <p>No information was saved or sent. Be cautious with unexpected login pages.</p>
-    </section>
+    <footer>Demo only. This is not an official Facebook sign-in page.</footer>
   </main>
 
   <script>
-    document.querySelector("#demo").addEventListener("submit", event => {
+    const form = document.getElementById("loginForm");
+    const welcome = document.getElementById("your device has been hacked");
+    const error = document.getElementById("error");
+
+    form.addEventListener("submit", function (event) {
       event.preventDefault();
-      document.querySelector("#form").hidden = true;
-      document.querySelector("#message").style.display = "block";
+
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value;
+
+      if (username === "test" && password === "test") {
+        form.style.display = "none";
+        welcome.style.display = "block";
+      } else {
+        error.textContent = "Invalid login. Try test / test.";
+      }
+    });
+
+    document.getElementById("logout").addEventListener("click", function () {
+      welcome.style.display = "none";
+      form.style.display = "block";
+      form.reset();
+      error.textContent = "";
     });
   </script>
 </body>
